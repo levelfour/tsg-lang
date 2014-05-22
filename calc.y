@@ -9,8 +9,10 @@
 }
 %token <double_value>	DOUBLE_LITERAL
 %token LPAREN RPAREN
-%token ADD SUB MUL DIV MOD CR
-%type <double_value> expression term primary_expression
+%left ADD SUB
+%left MUL DIV MOD
+%right CR
+%type <double_value> expression
 %%
 statements
 	: statement 
@@ -22,36 +24,30 @@ statement
 		printf(">>%lf\n", $1);
 	}
 expression
-	: term
-	| expression ADD term
-	{
-		$$ = $1 + $3;
-	}
-	| expression SUB term
-	{
-		$$ = $1 - $3;
-	}
-	;
-term
-	: primary_expression
-	| term MUL primary_expression 
-	{
-		$$ = $1 * $3;
-	}
-	| term DIV primary_expression
-	{
-		$$ = $1 / $3;
-	}
-	| term MOD primary_expression
-	{
-		$$ = $1 - $3 * (int)($1/$3);
-	}
-	;
-primary_expression
 	: DOUBLE_LITERAL
 	| LPAREN expression RPAREN
 	{
 		$$ = $2;
+	}
+	| expression ADD expression
+	{
+		$$ = $1 + $3;
+	}
+	| expression SUB expression
+	{
+		$$ = $1 - $3;
+	}
+	| expression MUL expression
+	{
+		$$ = $1 * $3;
+	}
+	| expression DIV expression
+	{
+		$$ = $1 / $3;
+	}
+	| expression MOD expression
+	{
+		$$ = $1 - $3 * (int)($1/$3);
 	}
 	;                 
 %%

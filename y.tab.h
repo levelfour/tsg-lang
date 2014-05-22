@@ -42,11 +42,11 @@
      DOUBLE_LITERAL = 258,
      LPAREN = 259,
      RPAREN = 260,
-     ADD = 261,
-     SUB = 262,
-     MUL = 263,
+     SUB = 261,
+     ADD = 262,
+     MOD = 263,
      DIV = 264,
-     MOD = 265,
+     MUL = 265,
      CR = 266
    };
 #endif
@@ -54,11 +54,11 @@
 #define DOUBLE_LITERAL 258
 #define LPAREN 259
 #define RPAREN 260
-#define ADD 261
-#define SUB 262
-#define MUL 263
+#define SUB 261
+#define ADD 262
+#define MOD 263
 #define DIV 264
-#define MOD 265
+#define MUL 265
 #define CR 266
 
 

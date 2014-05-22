@@ -7,31 +7,27 @@ Grammar
 
     3 statement: expression CR
 
-    4 expression: term
-    5           | expression ADD term
-    6           | expression SUB term
-
-    7 term: primary_expression
-    8     | term MUL primary_expression
-    9     | term DIV primary_expression
-   10     | term MOD primary_expression
-
-   11 primary_expression: DOUBLE_LITERAL
-   12                   | LPAREN expression RPAREN
+    4 expression: DOUBLE_LITERAL
+    5           | LPAREN expression RPAREN
+    6           | expression ADD expression
+    7           | expression SUB expression
+    8           | expression MUL expression
+    9           | expression DIV expression
+   10           | expression MOD expression
 
 
 Terminals, with rules where they appear
 
 $end (0) 0
 error (256)
-DOUBLE_LITERAL (258) 11
-LPAREN (259) 12
-RPAREN (260) 12
-ADD (261) 5
-SUB (262) 6
-MUL (263) 8
+DOUBLE_LITERAL (258) 4
+LPAREN (259) 5
+RPAREN (260) 5
+SUB (261) 7
+ADD (262) 6
+MOD (263) 10
 DIV (264) 9
-MOD (265) 10
+MUL (265) 8
 CR (266) 3
 
 
@@ -44,11 +40,7 @@ statements (13)
 statement (14)
     on left: 3, on right: 1 2
 expression (15)
-    on left: 4 5 6, on right: 3 5 6 12
-term (16)
-    on left: 7 8 9 10, on right: 4 5 6 8 9 10
-primary_expression (17)
-    on left: 11 12, on right: 7 8 9 10
+    on left: 4 5 6 7 8 9 10, on right: 3 5 6 7 8 9 10
 
 
 state 0
@@ -58,30 +50,26 @@ state 0
     DOUBLE_LITERAL  shift, and go to state 1
     LPAREN          shift, and go to state 2
 
-    statements          go to state 3
-    statement           go to state 4
-    expression          go to state 5
-    term                go to state 6
-    primary_expression  go to state 7
+    statements  go to state 3
+    statement   go to state 4
+    expression  go to state 5
 
 
 state 1
 
-   11 primary_expression: DOUBLE_LITERAL .
+    4 expression: DOUBLE_LITERAL .
 
-    $default  reduce using rule 11 (primary_expression)
+    $default  reduce using rule 4 (expression)
 
 
 state 2
 
-   12 primary_expression: LPAREN . expression RPAREN
+    5 expression: LPAREN . expression RPAREN
 
     DOUBLE_LITERAL  shift, and go to state 1
     LPAREN          shift, and go to state 2
 
-    expression          go to state 8
-    term                go to state 6
-    primary_expression  go to state 7
+    expression  go to state 6
 
 
 state 3
@@ -89,14 +77,12 @@ state 3
     0 $accept: statements . $end
     2 statements: statements . statement
 
-    $end            shift, and go to state 9
+    $end            shift, and go to state 7
     DOUBLE_LITERAL  shift, and go to state 1
     LPAREN          shift, and go to state 2
 
-    statement           go to state 10
-    expression          go to state 5
-    term                go to state 6
-    primary_expression  go to state 7
+    statement   go to state 8
+    expression  go to state 5
 
 
 state 4
@@ -109,170 +95,178 @@ state 4
 state 5
 
     3 statement: expression . CR
-    5 expression: expression . ADD term
-    6           | expression . SUB term
+    6 expression: expression . ADD expression
+    7           | expression . SUB expression
+    8           | expression . MUL expression
+    9           | expression . DIV expression
+   10           | expression . MOD expression
 
-    ADD  shift, and go to state 11
-    SUB  shift, and go to state 12
-    CR   shift, and go to state 13
+    SUB  shift, and go to state 9
+    ADD  shift, and go to state 10
+    MOD  shift, and go to state 11
+    DIV  shift, and go to state 12
+    MUL  shift, and go to state 13
+    CR   shift, and go to state 14
 
 
 state 6
 
-    4 expression: term .
-    8 term: term . MUL primary_expression
-    9     | term . DIV primary_expression
-   10     | term . MOD primary_expression
+    5 expression: LPAREN expression . RPAREN
+    6           | expression . ADD expression
+    7           | expression . SUB expression
+    8           | expression . MUL expression
+    9           | expression . DIV expression
+   10           | expression . MOD expression
 
-    MUL  shift, and go to state 14
-    DIV  shift, and go to state 15
-    MOD  shift, and go to state 16
-
-    $default  reduce using rule 4 (expression)
+    RPAREN  shift, and go to state 15
+    SUB     shift, and go to state 9
+    ADD     shift, and go to state 10
+    MOD     shift, and go to state 11
+    DIV     shift, and go to state 12
+    MUL     shift, and go to state 13
 
 
 state 7
-
-    7 term: primary_expression .
-
-    $default  reduce using rule 7 (term)
-
-
-state 8
-
-    5 expression: expression . ADD term
-    6           | expression . SUB term
-   12 primary_expression: LPAREN expression . RPAREN
-
-    RPAREN  shift, and go to state 17
-    ADD     shift, and go to state 11
-    SUB     shift, and go to state 12
-
-
-state 9
 
     0 $accept: statements $end .
 
     $default  accept
 
 
-state 10
+state 8
 
     2 statements: statements statement .
 
     $default  reduce using rule 2 (statements)
 
 
-state 11
+state 9
 
-    5 expression: expression ADD . term
+    7 expression: expression SUB . expression
 
     DOUBLE_LITERAL  shift, and go to state 1
     LPAREN          shift, and go to state 2
 
-    term                go to state 18
-    primary_expression  go to state 7
+    expression  go to state 16
+
+
+state 10
+
+    6 expression: expression ADD . expression
+
+    DOUBLE_LITERAL  shift, and go to state 1
+    LPAREN          shift, and go to state 2
+
+    expression  go to state 17
+
+
+state 11
+
+   10 expression: expression MOD . expression
+
+    DOUBLE_LITERAL  shift, and go to state 1
+    LPAREN          shift, and go to state 2
+
+    expression  go to state 18
 
 
 state 12
 
-    6 expression: expression SUB . term
+    9 expression: expression DIV . expression
 
     DOUBLE_LITERAL  shift, and go to state 1
     LPAREN          shift, and go to state 2
 
-    term                go to state 19
-    primary_expression  go to state 7
+    expression  go to state 19
 
 
 state 13
+
+    8 expression: expression MUL . expression
+
+    DOUBLE_LITERAL  shift, and go to state 1
+    LPAREN          shift, and go to state 2
+
+    expression  go to state 20
+
+
+state 14
 
     3 statement: expression CR .
 
     $default  reduce using rule 3 (statement)
 
 
-state 14
-
-    8 term: term MUL . primary_expression
-
-    DOUBLE_LITERAL  shift, and go to state 1
-    LPAREN          shift, and go to state 2
-
-    primary_expression  go to state 20
-
-
 state 15
 
-    9 term: term DIV . primary_expression
-
-    DOUBLE_LITERAL  shift, and go to state 1
-    LPAREN          shift, and go to state 2
-
-    primary_expression  go to state 21
-
-
-state 16
-
-   10 term: term MOD . primary_expression
-
-    DOUBLE_LITERAL  shift, and go to state 1
-    LPAREN          shift, and go to state 2
-
-    primary_expression  go to state 22
-
-
-state 17
-
-   12 primary_expression: LPAREN expression RPAREN .
-
-    $default  reduce using rule 12 (primary_expression)
-
-
-state 18
-
-    5 expression: expression ADD term .
-    8 term: term . MUL primary_expression
-    9     | term . DIV primary_expression
-   10     | term . MOD primary_expression
-
-    MUL  shift, and go to state 14
-    DIV  shift, and go to state 15
-    MOD  shift, and go to state 16
+    5 expression: LPAREN expression RPAREN .
 
     $default  reduce using rule 5 (expression)
 
 
-state 19
+state 16
 
-    6 expression: expression SUB term .
-    8 term: term . MUL primary_expression
-    9     | term . DIV primary_expression
-   10     | term . MOD primary_expression
+    6 expression: expression . ADD expression
+    7           | expression . SUB expression
+    7           | expression SUB expression .
+    8           | expression . MUL expression
+    9           | expression . DIV expression
+   10           | expression . MOD expression
 
-    MUL  shift, and go to state 14
-    DIV  shift, and go to state 15
-    MOD  shift, and go to state 16
+    MOD  shift, and go to state 11
+    DIV  shift, and go to state 12
+    MUL  shift, and go to state 13
+
+    $default  reduce using rule 7 (expression)
+
+
+state 17
+
+    6 expression: expression . ADD expression
+    6           | expression ADD expression .
+    7           | expression . SUB expression
+    8           | expression . MUL expression
+    9           | expression . DIV expression
+   10           | expression . MOD expression
+
+    MOD  shift, and go to state 11
+    DIV  shift, and go to state 12
+    MUL  shift, and go to state 13
 
     $default  reduce using rule 6 (expression)
 
 
+state 18
+
+    6 expression: expression . ADD expression
+    7           | expression . SUB expression
+    8           | expression . MUL expression
+    9           | expression . DIV expression
+   10           | expression . MOD expression
+   10           | expression MOD expression .
+
+    $default  reduce using rule 10 (expression)
+
+
+state 19
+
+    6 expression: expression . ADD expression
+    7           | expression . SUB expression
+    8           | expression . MUL expression
+    9           | expression . DIV expression
+    9           | expression DIV expression .
+   10           | expression . MOD expression
+
+    $default  reduce using rule 9 (expression)
+
+
 state 20
 
-    8 term: term MUL primary_expression .
+    6 expression: expression . ADD expression
+    7           | expression . SUB expression
+    8           | expression . MUL expression
+    8           | expression MUL expression .
+    9           | expression . DIV expression
+   10           | expression . MOD expression
 
-    $default  reduce using rule 8 (term)
-
-
-state 21
-
-    9 term: term DIV primary_expression .
-
-    $default  reduce using rule 9 (term)
-
-
-state 22
-
-   10 term: term MOD primary_expression .
-
-    $default  reduce using rule 10 (term)
+    $default  reduce using rule 8 (expression)
