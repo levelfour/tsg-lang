@@ -11,3 +11,4 @@ http://kmaebashi.com/programmer/devlang/yacclex.html
 + 剰余演算子の定義
 + カッコの定義
 + 演算子の結合性を用いた定義
++ 16進数・2進数の読み込み対応

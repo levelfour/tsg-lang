@@ -1,5 +1,6 @@
 %{
 	#include <stdio.h>
+	#include <string.h>
 	#include "y.tab.h"
 
 int yywrap(void) {
@@ -27,6 +28,14 @@ int yywrap(void) {
     double val; int temp;
 	sscanf(yytext, "%x", &temp);
 	val = temp;
+    yylval.double_value = val;
+    return INTEGER_LITERAL;
+}
+0b[01]* {
+	double val = 0;
+	for(int i = 0; i < strlen(yytext)-2; i++) {
+		val += ((yytext[strlen(yytext)-(i+1)]=='0')?0:1 << i);
+	}
     yylval.double_value = val;
     return INTEGER_LITERAL;
 }
