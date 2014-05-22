@@ -780,7 +780,7 @@ YY_RULE_SETUP
     double temp;
     sscanf(yytext, "%lf", &temp);
     yylval.double_value = temp;
-    return DOUBLE_LITERAL;
+    return INTEGER_LITERAL;
 }
 	YY_BREAK
 case 10:

@@ -21,7 +21,7 @@ int yywrap(void) {
     double temp;
     sscanf(yytext, "%lf", &temp);
     yylval.double_value = temp;
-    return DOUBLE_LITERAL;
+    return INTEGER_LITERAL;
 }
 [0-9]*\.[0-9]* {
     double temp;
