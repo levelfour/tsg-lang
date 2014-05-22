@@ -8,6 +8,7 @@
 	double		double_value;
 }
 %token <double_value>	DOUBLE_LITERAL
+%token LPAREN RPAREN
 %token ADD SUB MUL DIV MOD CR
 %type <double_value> expression term primary_expression
 %%
@@ -48,6 +49,10 @@ term
 	;
 primary_expression
 	: DOUBLE_LITERAL
+	| LPAREN expression RPAREN
+	{
+		$$ = $2;
+	}
 	;                 
 %%
 int

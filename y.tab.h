@@ -40,22 +40,26 @@
       know about them.  */
    enum yytokentype {
      DOUBLE_LITERAL = 258,
-     ADD = 259,
-     SUB = 260,
-     MUL = 261,
-     DIV = 262,
-     MOD = 263,
-     CR = 264
+     LPAREN = 259,
+     RPAREN = 260,
+     ADD = 261,
+     SUB = 262,
+     MUL = 263,
+     DIV = 264,
+     MOD = 265,
+     CR = 266
    };
 #endif
 /* Tokens.  */
 #define DOUBLE_LITERAL 258
-#define ADD 259
-#define SUB 260
-#define MUL 261
-#define DIV 262
-#define MOD 263
-#define CR 264
+#define LPAREN 259
+#define RPAREN 260
+#define ADD 261
+#define SUB 262
+#define MUL 263
+#define DIV 264
+#define MOD 265
+#define CR 266
 
 
 
@@ -68,7 +72,7 @@ typedef union YYSTYPE
 	double		double_value;
 }
 /* Line 1529 of yacc.c.  */
-#line 72 "y.tab.h"
+#line 76 "y.tab.h"
 	YYSTYPE;
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1
