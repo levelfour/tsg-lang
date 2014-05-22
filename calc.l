@@ -18,15 +18,22 @@ int yywrap(void) {
 "%"		return MOD;
 "\n"	return CR;
 [1-9][0-9]* {
-    double temp;
-    sscanf(yytext, "%lf", &temp);
-    yylval.double_value = temp;
+    double val;
+	sscanf(yytext, "%lf", &val);
+    yylval.double_value = val;
+    return INTEGER_LITERAL;
+}
+0x[1-9A-Fa-f][0-9A-Fa-f]* {
+    double val; int temp;
+	sscanf(yytext, "%x", &temp);
+	val = temp;
+    yylval.double_value = val;
     return INTEGER_LITERAL;
 }
 [0-9]*\.[0-9]* {
-    double temp;
-    sscanf(yytext, "%lf", &temp);
-    yylval.double_value = temp;
+    double val;
+    sscanf(yytext, "%lf", &val);
+    yylval.double_value = val;
     return DOUBLE_LITERAL;
 }
 %%
