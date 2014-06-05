@@ -68,13 +68,13 @@
 
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 typedef union YYSTYPE
-#line 6 "calc.y"
+#line 10 "calc.y"
 {
 	int			int_value;
 	double		double_value;
 }
 /* Line 1529 of yacc.c.  */
-#line 78 "y.tab.h"
+#line 78 "y.hpp"
 	YYSTYPE;
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1

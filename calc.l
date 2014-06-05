@@ -1,7 +1,7 @@
 %{
 	#include <stdio.h>
 	#include <string.h>
-	#include "y.tab.h"
+	#include "y.hpp"
 
 int yywrap(void) {
     return 1;

@@ -2,6 +2,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #define YYDEBUG 1
+
+extern "C" int yylex(void);
+int yyerror(char const *);
+
 %}
 %union {
 	int			int_value;
@@ -53,8 +57,7 @@ expression
 	}
 	;                 
 %%
-int
-yyerror(char const *str)
+int yyerror(char const *str)
 {
 	extern char *yytext;
 	fprintf(stderr, "parser error near %s\n", yytext);

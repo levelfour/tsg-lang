@@ -100,6 +100,10 @@
 #include <stdlib.h>
 #define YYDEBUG 1
 
+extern "C" int yylex(void);
+int yyerror(char const *);
+
+
 
 /* Enabling traces.  */
 #ifndef YYDEBUG
@@ -121,13 +125,13 @@
 
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 typedef union YYSTYPE
-#line 6 "calc.y"
+#line 10 "calc.y"
 {
 	int			int_value;
 	double		double_value;
 }
 /* Line 193 of yacc.c.  */
-#line 131 "y.tab.c"
+#line 135 "y.cpp"
 	YYSTYPE;
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1
@@ -140,7 +144,7 @@ typedef union YYSTYPE
 
 
 /* Line 216 of yacc.c.  */
-#line 144 "y.tab.c"
+#line 148 "y.cpp"
 
 #ifdef short
 # undef short
@@ -426,8 +430,8 @@ static const yytype_int8 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    19,    19,    20,    23,    28,    29,    30,    34,    38,
-      42,    46,    50
+       0,    23,    23,    24,    27,    32,    33,    34,    38,    42,
+      46,    50,    54
 };
 #endif
 
@@ -1340,49 +1344,49 @@ yyreduce:
   switch (yyn)
     {
         case 4:
-#line 24 "calc.y"
+#line 28 "calc.y"
     {
 		printf(">>%lf\n", (yyvsp[(1) - (2)].double_value));
 	}
     break;
 
   case 7:
-#line 31 "calc.y"
+#line 35 "calc.y"
     {
 		(yyval.double_value) = (yyvsp[(2) - (3)].double_value);
 	}
     break;
 
   case 8:
-#line 35 "calc.y"
+#line 39 "calc.y"
     {
 		(yyval.double_value) = (yyvsp[(1) - (3)].double_value) + (yyvsp[(3) - (3)].double_value);
 	}
     break;
 
   case 9:
-#line 39 "calc.y"
+#line 43 "calc.y"
     {
 		(yyval.double_value) = (yyvsp[(1) - (3)].double_value) - (yyvsp[(3) - (3)].double_value);
 	}
     break;
 
   case 10:
-#line 43 "calc.y"
+#line 47 "calc.y"
     {
 		(yyval.double_value) = (yyvsp[(1) - (3)].double_value) * (yyvsp[(3) - (3)].double_value);
 	}
     break;
 
   case 11:
-#line 47 "calc.y"
+#line 51 "calc.y"
     {
 		(yyval.double_value) = (yyvsp[(1) - (3)].double_value) / (yyvsp[(3) - (3)].double_value);
 	}
     break;
 
   case 12:
-#line 51 "calc.y"
+#line 55 "calc.y"
     {
 		(yyval.double_value) = (yyvsp[(1) - (3)].double_value) - (yyvsp[(3) - (3)].double_value) * (int)((yyvsp[(1) - (3)].double_value)/(yyvsp[(3) - (3)].double_value));
 	}
@@ -1390,7 +1394,7 @@ yyreduce:
 
 
 /* Line 1267 of yacc.c.  */
-#line 1394 "y.tab.c"
+#line 1398 "y.cpp"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -1604,10 +1608,9 @@ yyreturn:
 }
 
 
-#line 55 "calc.y"
+#line 59 "calc.y"
 
-int
-yyerror(char const *str)
+int yyerror(char const *str)
 {
 	extern char *yytext;
 	fprintf(stderr, "parser error near %s\n", yytext);
