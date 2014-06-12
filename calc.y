@@ -11,7 +11,9 @@ int yyerror(char const *);
 	int			int_value;
 	double		double_value;
 }
+	/*
 %token <int_value>		INTEGER_LITERAL
+	*/
 %token <double_value>	DOUBLE_LITERAL
 %token LPAREN RPAREN
 %left ADD SUB
@@ -29,8 +31,8 @@ statement
 		printf(">>%lf\n", $1);
 	}
 expression
-	: INTEGER_LITERAL
-	| DOUBLE_LITERAL
+	/*: INTEGER_LITERAL
+	|*/ : DOUBLE_LITERAL
 	| LPAREN expression RPAREN
 	{
 		$$ = $2;
@@ -51,10 +53,12 @@ expression
 	{
 		$$ = $1 / $3;
 	}
+	/*
 	| expression MOD expression
 	{
 		$$ = $1 - $3 * (int)($1/$3);
 	}
+	*/
 	;                 
 %%
 int yyerror(char const *str)

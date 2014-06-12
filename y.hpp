@@ -39,29 +39,27 @@
    /* Put the tokens into the symbol table, so that GDB and other debuggers
       know about them.  */
    enum yytokentype {
-     INTEGER_LITERAL = 258,
-     DOUBLE_LITERAL = 259,
-     LPAREN = 260,
-     RPAREN = 261,
-     SUB = 262,
-     ADD = 263,
-     MOD = 264,
-     DIV = 265,
-     MUL = 266,
-     CR = 267
+     DOUBLE_LITERAL = 258,
+     LPAREN = 259,
+     RPAREN = 260,
+     SUB = 261,
+     ADD = 262,
+     MOD = 263,
+     DIV = 264,
+     MUL = 265,
+     CR = 266
    };
 #endif
 /* Tokens.  */
-#define INTEGER_LITERAL 258
-#define DOUBLE_LITERAL 259
-#define LPAREN 260
-#define RPAREN 261
-#define SUB 262
-#define ADD 263
-#define MOD 264
-#define DIV 265
-#define MUL 266
-#define CR 267
+#define DOUBLE_LITERAL 258
+#define LPAREN 259
+#define RPAREN 260
+#define SUB 261
+#define ADD 262
+#define MOD 263
+#define DIV 264
+#define MUL 265
+#define CR 266
 
 
 
@@ -74,7 +72,7 @@ typedef union YYSTYPE
 	double		double_value;
 }
 /* Line 1529 of yacc.c.  */
-#line 78 "y.hpp"
+#line 76 "y.hpp"
 	YYSTYPE;
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1
