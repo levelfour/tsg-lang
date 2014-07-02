@@ -1,6 +1,7 @@
 %{
 #include <stdio.h>
 #include <stdlib.h>
+#include "ast.hpp"
 #define YYDEBUG 1
 
 extern "C" int yylex(void);
@@ -8,8 +9,8 @@ int yyerror(char const *);
 
 %}
 %union {
-	int			int_value;
-	double		double_value;
+	double double_value;
+	void *expression;
 }
 	/*
 %token <int_value>		INTEGER_LITERAL
@@ -19,7 +20,7 @@ int yyerror(char const *);
 %left ADD SUB
 %left MUL DIV MOD
 %right CR
-%type <double_value> expression
+%type <expression> expression
 %%
 statements
 	: statement 
@@ -28,30 +29,33 @@ statements
 statement
 	: expression CR
 	{
-		printf(">>%lf\n", $1);
+		printf(">>%lf\n", ((Expr *)$1)->evaluate()->value());
 	}
 expression
 	/*: INTEGER_LITERAL
 	|*/ : DOUBLE_LITERAL
+	{
+		$$ = new Expr($1);
+	}
 	| LPAREN expression RPAREN
 	{
 		$$ = $2;
 	}
 	| expression ADD expression
 	{
-		$$ = $1 + $3;
+		$$ = new BinOpExpr(OP_ADD, (Expr *)$1, (Expr *)$3);
 	}
 	| expression SUB expression
 	{
-		$$ = $1 - $3;
+		$$ = new BinOpExpr(OP_SUB, (Expr *)$1, (Expr *)$3);
 	}
 	| expression MUL expression
 	{
-		$$ = $1 * $3;
+		$$ = new BinOpExpr(OP_MUL, (Expr *)$1, (Expr *)$3);
 	}
 	| expression DIV expression
 	{
-		$$ = $1 / $3;
+		$$ = new BinOpExpr(OP_DIV, (Expr *)$1, (Expr *)$3);
 	}
 	/*
 	| expression MOD expression

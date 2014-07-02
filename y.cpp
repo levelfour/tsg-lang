@@ -96,6 +96,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include "ast.hpp"
 #define YYDEBUG 1
 
 extern "C" int yylex(void);
@@ -123,13 +124,13 @@ int yyerror(char const *);
 
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 typedef union YYSTYPE
-#line 10 "calc.y"
+#line 11 "calc.y"
 {
-	int			int_value;
-	double		double_value;
+	double double_value;
+	void *expression;
 }
 /* Line 193 of yacc.c.  */
-#line 133 "y.cpp"
+#line 134 "y.cpp"
 	YYSTYPE;
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1
@@ -142,7 +143,7 @@ typedef union YYSTYPE
 
 
 /* Line 216 of yacc.c.  */
-#line 146 "y.cpp"
+#line 147 "y.cpp"
 
 #ifdef short
 # undef short
@@ -428,8 +429,8 @@ static const yytype_int8 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    25,    25,    26,    29,    35,    36,    40,    44,    48,
-      52
+       0,    26,    26,    27,    30,    36,    40,    44,    48,    52,
+      56
 };
 #endif
 
@@ -1337,50 +1338,57 @@ yyreduce:
   switch (yyn)
     {
         case 4:
-#line 30 "calc.y"
+#line 31 "calc.y"
     {
-		printf(">>%lf\n", (yyvsp[(1) - (2)].double_value));
+		printf(">>%lf\n", ((Expr *)(yyvsp[(1) - (2)].expression))->evaluate()->value());
+	}
+    break;
+
+  case 5:
+#line 37 "calc.y"
+    {
+		(yyval.expression) = new Expr((yyvsp[(1) - (1)].double_value));
 	}
     break;
 
   case 6:
-#line 37 "calc.y"
+#line 41 "calc.y"
     {
-		(yyval.double_value) = (yyvsp[(2) - (3)].double_value);
+		(yyval.expression) = (yyvsp[(2) - (3)].expression);
 	}
     break;
 
   case 7:
-#line 41 "calc.y"
+#line 45 "calc.y"
     {
-		(yyval.double_value) = (yyvsp[(1) - (3)].double_value) + (yyvsp[(3) - (3)].double_value);
+		(yyval.expression) = new BinOpExpr(OP_ADD, (Expr *)(yyvsp[(1) - (3)].expression), (Expr *)(yyvsp[(3) - (3)].expression));
 	}
     break;
 
   case 8:
-#line 45 "calc.y"
+#line 49 "calc.y"
     {
-		(yyval.double_value) = (yyvsp[(1) - (3)].double_value) - (yyvsp[(3) - (3)].double_value);
+		(yyval.expression) = new BinOpExpr(OP_SUB, (Expr *)(yyvsp[(1) - (3)].expression), (Expr *)(yyvsp[(3) - (3)].expression));
 	}
     break;
 
   case 9:
-#line 49 "calc.y"
+#line 53 "calc.y"
     {
-		(yyval.double_value) = (yyvsp[(1) - (3)].double_value) * (yyvsp[(3) - (3)].double_value);
+		(yyval.expression) = new BinOpExpr(OP_MUL, (Expr *)(yyvsp[(1) - (3)].expression), (Expr *)(yyvsp[(3) - (3)].expression));
 	}
     break;
 
   case 10:
-#line 53 "calc.y"
+#line 57 "calc.y"
     {
-		(yyval.double_value) = (yyvsp[(1) - (3)].double_value) / (yyvsp[(3) - (3)].double_value);
+		(yyval.expression) = new BinOpExpr(OP_DIV, (Expr *)(yyvsp[(1) - (3)].expression), (Expr *)(yyvsp[(3) - (3)].expression));
 	}
     break;
 
 
 /* Line 1267 of yacc.c.  */
-#line 1384 "y.cpp"
+#line 1392 "y.cpp"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -1594,7 +1602,7 @@ yyreturn:
 }
 
 
-#line 63 "calc.y"
+#line 67 "calc.y"
 
 int yyerror(char const *str)
 {

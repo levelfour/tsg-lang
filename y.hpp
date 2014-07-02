@@ -66,10 +66,10 @@
 
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 typedef union YYSTYPE
-#line 10 "calc.y"
+#line 11 "calc.y"
 {
-	int			int_value;
-	double		double_value;
+	double double_value;
+	void *expression;
 }
 /* Line 1529 of yacc.c.  */
 #line 76 "y.hpp"
