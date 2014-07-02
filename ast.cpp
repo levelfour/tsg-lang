@@ -5,12 +5,16 @@
 #include <typeinfo>
 using namespace std;
 
+Expr::Expr(double v) {
+	val.double_val = v;
+}
+
 Expr *Expr::evaluate() {
 	return this;
 }
 
 double Expr::value() {
-	return val;
+	return val.double_val;
 }
 
 Expr *bin_add(Expr *l, Expr *r) {

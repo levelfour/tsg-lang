@@ -9,12 +9,11 @@ int yyerror(char const *);
 
 %}
 %union {
+	int int_value;
 	double double_value;
 	void *expression;
 }
-	/*
 %token <int_value>		INTEGER_LITERAL
-	*/
 %token <double_value>	DOUBLE_LITERAL
 %token LPAREN RPAREN
 %left ADD SUB
@@ -32,8 +31,11 @@ statement
 		printf(">>%lf\n", ((Expr *)$1)->evaluate()->value());
 	}
 expression
-	/*: INTEGER_LITERAL
-	|*/ : DOUBLE_LITERAL
+	: INTEGER_LITERAL
+	{
+		$$ = new Expr($1);
+	}
+	| DOUBLE_LITERAL
 	{
 		$$ = new Expr($1);
 	}

@@ -11,9 +11,12 @@ enum BIN_OPERATOR_INDEX {
 
 class Expr {
 private:
-	double val;
+	union {
+		int int_val;
+		double double_val;
+	} val;
 public:
-	Expr(double v = 0) : val(v) {}
+	Expr(double v = 0);
 	virtual ~Expr() {}
 	virtual Expr *evaluate();
 	double value();
